@@ -1,0 +1,12 @@
+{
+  "name": "agrometeo-cacg",
+  "version": "1.0.0",
+  "description": "Extractor diario del boletín de precios de la Cámara Argentina de Consignatarios de Ganado",
+  "type": "module",
+  "scripts": {
+    "start": "node extract.js"
+  },
+  "dependencies": {
+    "pdf-parse": "^1.1.4"
+  }
+}

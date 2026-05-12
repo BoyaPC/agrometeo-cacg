@@ -1,0 +1,42 @@
+name: Update CACG prices
+
+on:
+  # Corre todos los días a las 12:00 UTC (09:00 ART)
+  schedule:
+    - cron: '0 12 * * *'
+  # También permite correr manualmente desde la UI de GitHub
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write          # necesario para commit/push del JSON
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm install
+
+      - name: Extract CACG PDF → JSON
+        run: npm start
+
+      - name: Commit changes if any
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cacg.json cacg.debug.txt
+          # Si no hay cambios, no falla
+          if git diff --staged --quiet; then
+            echo "Sin cambios en cacg.json — el PDF de origen no se actualizó."
+          else
+            git commit -m "Auto-update cacg.json $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+            echo "✅ cacg.json actualizado y publicado."
+          fi

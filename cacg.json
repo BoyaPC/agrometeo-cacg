@@ -1,0 +1,25 @@
+{
+  "source": "cacg",
+  "fecha_publicacion": "06/05/26",
+  "periodo_hasta": "30/04/26",
+  "invernada": {
+    "machos": [],
+    "hembras": [],
+    "mixtos": [
+      {
+        "peso": "-100",
+        "cabezas": 520,
+        "prom_kilo": 8486,
+        "max_kilo": 9701,
+        "min_kilo": 6875,
+        "prom_bulto": 783923,
+        "max_bulto": 860000,
+        "min_bulto": 550000
+      }
+    ]
+  },
+  "vientres": [],
+  "gordo": [],
+  "fecha_extraccion": "2026-05-12",
+  "url_fuente": "https://cacg.org.ar/precios"
+}

@@ -1,5 +1,5 @@
 // =====================================================================
-// agrometeo-cacg / extract.js
+// agrometeo-cacg / extract.js (v2)
 // ---------------------------------------------------------------------
 // Descarga el PDF público de CACG, extrae texto con pdf-parse y lo
 // estructura en JSON con invernada (rangos por kg) + vientres + gordo.
@@ -14,7 +14,12 @@ const URL_PDF = 'https://cacg.org.ar/precios';
 // ---------- Helpers ----------
 const parseN = (s) => {
   if (s == null) return 0;
-  return parseFloat(String(s).replace(/\./g, '').replace(',', '.')) || 0;
+  const str = String(s).trim();
+  // Soporta "3.136,71" (decimal con coma + miles con punto) y "1.150.000" (solo miles)
+  if (str.includes(',')) {
+    return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
+  }
+  return parseFloat(str.replace(/\./g, '')) || 0;
 };
 const hoyISO = () => new Date().toISOString().slice(0, 10);
 
@@ -38,7 +43,7 @@ async function main() {
   const texto = data.text;
   console.log(`   Texto extraído: ${texto.length.toLocaleString()} caracteres`);
 
-  // Guardar dump de texto plano para debug (se commitea solo la primera vez por si necesitamos ajustar)
+  // Guardar dump de texto plano para debug
   await fs.writeFile('./cacg.debug.txt', texto, 'utf8');
 
   console.log('🧱 Parseando...');
@@ -54,80 +59,64 @@ async function main() {
   console.log(`   vientres:          ${out.vientres.length} filas`);
   console.log(`   gordo:             ${out.gordo.length} filas`);
   console.log(`   fecha_publicacion: ${out.fecha_publicacion}`);
+  console.log(`   periodo_hasta:     ${out.periodo_hasta}`);
 }
 
 // ---------- Parser ----------
-// El texto extraído por pdf-parse viene con saltos de línea decentes,
-// pero los datos a veces vienen pegados. Estrategia: tokenizar por whitespace,
-// detectar runs de >=4 números y armar la fila mirando atrás para conseguir
-// la etiqueta (peso o categoría).
+// El texto del PDF viene con saltos de línea decentes pero datos partidos
+// (los números a veces vienen en líneas distintas que el peso/categoría).
+//
+// Estructura del documento:
+//   Invernada y Cría
+//     Terneros        ← inicio MACHOS
+//        - 100, 100 a 130, 130 a 160, 160 a 180, 180 a 200
+//     Novillitos      (sigue siendo machos)
+//        200 a 230, 230 a 260, 260 a 300, ...
+//     Total Machos
+//     Terneras        ← inicio HEMBRAS
+//        - de 100, 100 a 130, 130 a 150, ...
+//     Vaquillonas     (sigue siendo hembras)
+//        210 a 250, 250 a 290, ...
+//     Total Hembras
+//     Terneras/Terneros  ← inicio MIXTOS
+//        -100, 100 a 130, ...
+//     Novillitos/Vaquillonas
+//        210 a 250, ...
+//     Total Machos / Hembras
+//   Vaquillonas         ← inicio VIENTRES
+//      S/servicio, Con servicio, Preñez gar.
+//   Vacas
+//      Sin servicio, Con servicio, Nuevas preñez gar., ...
+//   Total Vientres
+//   Gordo               ← inicio GORDO
+//      Vacas gordas, Vaca Manufactura/Conserva, Vaca Holando, Toros, ...
+//      Macho entero joven (MEJ)
+
 function parsear(texto) {
-  // Normalizar
-  const t = texto.replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+  const lineasRaw = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
-  // Fechas
-  const fechaPubM = t.match(/(\d{2}\/\d{2}\/\d{2,4})\s+PRECIOS/i)
-                 || t.match(/(\d{2}\/\d{2}\/\d{2,4})/);
-  const periodoM = t.match(/al\s+(\d{2}\/\d{2}\/\d{2,4})/i);
+  const fechaPubM = texto.match(/(\d{2}\/\d{2}\/\d{2,4})\s/);
+  const periodoM = texto.match(/al\s+(\d{2}\/\d{2}\/\d{2,4})/);
 
-  const tokens = t.split(' ').filter(Boolean);
-  const isNum = (s) => /^[\d.]+$/.test(s) && !/^\.+$/.test(s);
-
-  // Stopwords que NO pueden ser parte de un label
-  const stopWords = /^(Terneros|Terneras|Novillitos|Vaquillonas|Vacas|Toros|Gordo|Categoría|Categoria|Total|Peso|Por|Al|Promedio|Máximo|Maximo|Mínimo|Minimo|Cabezas|Invernada|Cría|Cria|Condición|Condicion|Kgs|Kg|Macho|Hembra|Macho\/Hembra|Bulto|kilo|Fuente|ENTRE|SURCOS|y|CORRALES|CÁMARA|CAMARA|ARGENTINA|DE|CONSIGNATARIOS|GANADO|Remates|Feria|Internet|y\/o|Televisión|Television|del|al|N°|Nro\.|PRECIOS)$/i;
-
-  // Headers que cambian de sección
-  const sectionHeaders = {
-    'Terneros':    'machos_terneros',
-    'Novillitos':  'machos_novillitos',
-    'Terneras':    'hembras_terneras',
-    'Vaquillonas': 'hembras_vaquillonas',
-    'Gordo':       'gordo',
-  };
-
-  // Marcadores que detectamos en orden
-  const idxTerneros    = tokens.findIndex(x => x === 'Terneros');
-  const idxTerneras    = tokens.findIndex((x, i) => x === 'Terneras' && i > idxTerneros);
-  const idxMixtos      = tokens.findIndex((x, i) =>
-    (x === 'Terneras/' || x === 'Terneras/Terneros') && i > (idxTerneras > 0 ? idxTerneras : 0)
-  );
-  const idxGordo       = tokens.findIndex(x => x === 'Gordo');
-
-  // Recolección de filas
-  const filas7 = []; // invernada: label + 7 números
-  const filas4 = []; // vientres y gordo: label + 4 números
-
-  let i = 0;
-  while (i < tokens.length) {
-    if (!isNum(tokens[i])) { i++; continue; }
-    // Run de números
-    let j = i;
-    const nums = [];
-    while (j < tokens.length && isNum(tokens[j]) && nums.length < 10) {
-      nums.push(parseN(tokens[j]));
-      j++;
-    }
-    if (nums.length >= 4) {
-      // Mirar atrás hasta 5 tokens para armar label
-      let labelStart = i;
-      for (let k = i - 1; k >= Math.max(0, i - 6); k--) {
-        if (isNum(tokens[k])) break;
-        if (stopWords.test(tokens[k])) break;
-        labelStart = k;
-      }
-      const label = tokens.slice(labelStart, i).join(' ').trim();
-      if (label && label.length >= 2) {
-        if (nums.length >= 7) {
-          filas7.push({ label, nums: nums.slice(0, 7), start: i });
-        } else {
-          filas4.push({ label, nums: nums.slice(0, 4), start: i });
-        }
-      }
-    }
-    i = j;
+  // ----- Helpers internos -----
+  function extraerNumeros(s) {
+    const tokens = s.split(/\s+/).filter(Boolean);
+    return tokens
+      .filter(t => /^[\d.]+(,\d+)?$/.test(t))
+      .map(t => ({ tok: t, val: parseN(t) }));
+  }
+  function esSoloNumeros(s) {
+    const tokens = s.split(/\s+/).filter(Boolean);
+    return tokens.length > 0 && tokens.every(t => /^[\d.]+(,\d+)?$/.test(t));
+  }
+  function extraerPeso(s) {
+    // Captura: "+ de 400", "- 100", "- de 100", "100 a 130", "-100", "+ 390"
+    const m = s.match(/^([+-]\s*(?:de\s+)?\d+|\d+\s*a\s*\d+|-\s*\d+|-\d+)\s*(.*)$/);
+    if (!m) return null;
+    return { peso: m[1].replace(/\s+/g, ' ').trim(), resto: m[2] };
   }
 
-  // Clasificar
+  // ----- Resultado base -----
   const result = {
     source: 'cacg',
     fecha_publicacion: fechaPubM ? fechaPubM[1] : null,
@@ -137,38 +126,153 @@ function parsear(texto) {
     gordo: [],
   };
 
-  const limMachos  = idxTerneras > 0 ? idxTerneras : Infinity;
-  const limHembras = idxMixtos   > 0 ? idxMixtos   : (idxGordo > 0 ? idxGordo : Infinity);
-  const limMixtos  = idxGordo    > 0 ? idxGordo    : Infinity;
+  // ----- FASE 1: localizar los rangos de línea de cada sección -----
+  let lineMachosIni = -1, lineHembrasIni = -1, lineMixtosIni = -1;
+  let lineVientresIni = -1, lineGordoIni = -1;
 
-  for (const f of filas7) {
-    const item = {
-      peso: f.label,
-      cabezas: f.nums[0], prom_kilo: f.nums[1], max_kilo: f.nums[2], min_kilo: f.nums[3],
-      prom_bulto: f.nums[4], max_bulto: f.nums[5], min_bulto: f.nums[6],
-    };
-    if (f.start < limMachos)       result.invernada.machos.push(item);
-    else if (f.start < limHembras) result.invernada.hembras.push(item);
-    else if (f.start < limMixtos)  result.invernada.mixtos.push(item);
+  for (let i = 0; i < lineasRaw.length; i++) {
+    const l = lineasRaw[i];
+    if (lineMachosIni < 0 && /^Terneros$/i.test(l)) lineMachosIni = i + 1;
+    else if (lineMachosIni >= 0 && lineHembrasIni < 0 && /^Terneras$/i.test(l)) lineHembrasIni = i + 1;
+    else if (lineHembrasIni >= 0 && lineMixtosIni < 0 && (/^Terneras\/$/i.test(l) || /^Terneras\/Terneros$/i.test(l))) lineMixtosIni = i + 1;
+    else if (lineMixtosIni >= 0 && lineVientresIni < 0 && /^Total Machos \/ Hembras/i.test(l)) lineVientresIni = i + 1;
+    else if (lineGordoIni < 0 && /^Gordo$/i.test(l)) lineGordoIni = i + 1;
   }
 
-  for (const f of filas4) {
-    if (idxGordo > 0 && f.start >= idxGordo) {
-      result.gordo.push({
-        cat: f.label,
-        cabezas: f.nums[0],
-        prom_kilo: f.nums[1],
-        max_kilo: f.nums[2],
-        min_kilo: f.nums[3],
-      });
-    } else if (f.start >= limMixtos && (idxGordo < 0 || f.start < idxGordo)) {
-      result.vientres.push({
-        cat: f.label,
-        cabezas: f.nums[0],
-        prom_bulto: f.nums[1],
-        max_bulto: f.nums[2],
-        min_bulto: f.nums[3],
-      });
+  // ----- FASE 2: parser de INVERNADA (machos, hembras, mixtos) -----
+  function parsearInvernada(desde, hasta, key) {
+    let i = desde;
+    while (i < hasta) {
+      const linea = lineasRaw[i];
+      // Skipear subheaders de la sección actual
+      if (/^(Novillitos|Novillitos\/|Vaquillonas|Total)/i.test(linea)) { i++; continue; }
+      const ext = extraerPeso(linea);
+      if (ext) {
+        let nums = extraerNumeros(ext.resto);
+        let k = i + 1;
+        while (nums.length < 7 && k < hasta) {
+          const sig = lineasRaw[k];
+          if (esSoloNumeros(sig)) {
+            nums = nums.concat(extraerNumeros(sig));
+            k++;
+          } else break;
+        }
+        if (nums.length >= 7) {
+          result.invernada[key].push({
+            peso: ext.peso,
+            cabezas:    nums[0].val,
+            prom_kilo:  nums[1].val,
+            max_kilo:   nums[2].val,
+            min_kilo:   nums[3].val,
+            prom_bulto: nums[4].val,
+            max_bulto:  nums[5].val,
+            min_bulto:  nums[6].val,
+          });
+          i = k;
+          continue;
+        }
+      }
+      i++;
+    }
+  }
+
+  if (lineMachosIni >= 0)  parsearInvernada(lineMachosIni,  lineHembrasIni  > 0 ? lineHembrasIni  : lineasRaw.length, 'machos');
+  if (lineHembrasIni >= 0) parsearInvernada(lineHembrasIni, lineMixtosIni   > 0 ? lineMixtosIni   : lineasRaw.length, 'hembras');
+  if (lineMixtosIni >= 0)  parsearInvernada(lineMixtosIni,  lineVientresIni > 0 ? lineVientresIni : lineasRaw.length, 'mixtos');
+
+  // ----- FASE 3: parser de VIENTRES -----
+  // Estructura:
+  //   Vaquillonas
+  //   S/servicio
+  //   694 1.732.161 2.250.000 1.350.000
+  //   ...
+  //   Vacas
+  //   Sin servicio
+  //   7.673 1.230.844 ...
+  //   ...
+  if (lineVientresIni >= 0) {
+    const finVientres = lineGordoIni > 0 ? lineGordoIni : lineasRaw.length;
+    let bufferCat = [];
+    let grupoActual = '';
+
+    for (let i = lineVientresIni; i < finVientres; i++) {
+      const l = lineasRaw[i];
+
+      // Detectar grupos
+      if (/^Vaquillonas$/i.test(l)) { grupoActual = 'Vaquillonas'; bufferCat = []; continue; }
+      if (/^Vacas$/i.test(l))       { grupoActual = 'Vacas';       bufferCat = []; continue; }
+      // Headers de columna
+      if (/^(Categoría|Peso|Condición|Cabezas|Promedio|Máximo|Mínimo|Al bulto|Por kilo|Total)/i.test(l)) {
+        bufferCat = [];
+        continue;
+      }
+
+      const nums = extraerNumeros(l);
+      if (nums.length === 0) {
+        // Es parte de la categoría (puede ser multilínea: "Medio uso" + "preñez gar.")
+        bufferCat.push(l);
+        continue;
+      }
+
+      // Hay números: recolectar 4
+      let allNums = nums.slice();
+      let k = i + 1;
+      while (allNums.length < 4 && k < finVientres) {
+        const sig = lineasRaw[k];
+        if (esSoloNumeros(sig)) {
+          allNums = allNums.concat(extraerNumeros(sig));
+          k++;
+        } else break;
+      }
+      if (allNums.length >= 4) {
+        const catFull = (grupoActual ? grupoActual + ' ' : '') + bufferCat.join(' ');
+        result.vientres.push({
+          cat: catFull.trim().replace(/\s+/g, ' '),
+          cabezas:    allNums[0].val,
+          prom_bulto: allNums[1].val,
+          max_bulto:  allNums[2].val,
+          min_bulto:  allNums[3].val,
+        });
+        bufferCat = [];
+        i = k - 1;
+      }
+    }
+  }
+
+  // ----- FASE 4: parser de GORDO -----
+  if (lineGordoIni >= 0) {
+    let bufferCat = [];
+    for (let i = lineGordoIni; i < lineasRaw.length; i++) {
+      const l = lineasRaw[i];
+      if (/^(Categoría|Cabezas|Promedio|Máximo|Mínimo|Por kilo|Al bulto|Total|Fuente)/i.test(l)) {
+        bufferCat = [];
+        continue;
+      }
+      const nums = extraerNumeros(l);
+      if (nums.length === 0) {
+        bufferCat.push(l);
+        continue;
+      }
+      let allNums = nums.slice();
+      let k = i + 1;
+      while (allNums.length < 4 && k < lineasRaw.length) {
+        const sig = lineasRaw[k];
+        if (esSoloNumeros(sig)) {
+          allNums = allNums.concat(extraerNumeros(sig));
+          k++;
+        } else break;
+      }
+      if (allNums.length >= 4) {
+        result.gordo.push({
+          cat: bufferCat.join(' ').trim().replace(/\s+/g, ' '),
+          cabezas:   allNums[0].val,
+          prom_kilo: allNums[1].val,
+          max_kilo:  allNums[2].val,
+          min_kilo:  allNums[3].val,
+        });
+        bufferCat = [];
+        i = k - 1;
+      }
     }
   }
 

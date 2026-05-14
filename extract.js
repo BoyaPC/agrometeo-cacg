@@ -63,42 +63,12 @@ async function main() {
 }
 
 // ---------- Parser ----------
-// El texto del PDF viene con saltos de línea decentes pero datos partidos
-// (los números a veces vienen en líneas distintas que el peso/categoría).
-//
-// Estructura del documento:
-//   Invernada y Cría
-//     Terneros        ← inicio MACHOS
-//        - 100, 100 a 130, 130 a 160, 160 a 180, 180 a 200
-//     Novillitos      (sigue siendo machos)
-//        200 a 230, 230 a 260, 260 a 300, ...
-//     Total Machos
-//     Terneras        ← inicio HEMBRAS
-//        - de 100, 100 a 130, 130 a 150, ...
-//     Vaquillonas     (sigue siendo hembras)
-//        210 a 250, 250 a 290, ...
-//     Total Hembras
-//     Terneras/Terneros  ← inicio MIXTOS
-//        -100, 100 a 130, ...
-//     Novillitos/Vaquillonas
-//        210 a 250, ...
-//     Total Machos / Hembras
-//   Vaquillonas         ← inicio VIENTRES
-//      S/servicio, Con servicio, Preñez gar.
-//   Vacas
-//      Sin servicio, Con servicio, Nuevas preñez gar., ...
-//   Total Vientres
-//   Gordo               ← inicio GORDO
-//      Vacas gordas, Vaca Manufactura/Conserva, Vaca Holando, Toros, ...
-//      Macho entero joven (MEJ)
-
 function parsear(texto) {
   const lineasRaw = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
   const fechaPubM = texto.match(/(\d{2}\/\d{2}\/\d{2,4})\s/);
   const periodoM = texto.match(/al\s+(\d{2}\/\d{2}\/\d{2,4})/);
 
-  // ----- Helpers internos -----
   function extraerNumeros(s) {
     const tokens = s.split(/\s+/).filter(Boolean);
     return tokens
@@ -110,13 +80,11 @@ function parsear(texto) {
     return tokens.length > 0 && tokens.every(t => /^[\d.]+(,\d+)?$/.test(t));
   }
   function extraerPeso(s) {
-    // Captura: "+ de 400", "- 100", "- de 100", "100 a 130", "-100", "+ 390"
     const m = s.match(/^([+-]\s*(?:de\s+)?\d+|\d+\s*a\s*\d+|-\s*\d+|-\d+)\s*(.*)$/);
     if (!m) return null;
     return { peso: m[1].replace(/\s+/g, ' ').trim(), resto: m[2] };
   }
 
-  // ----- Resultado base -----
   const result = {
     source: 'cacg',
     fecha_publicacion: fechaPubM ? fechaPubM[1] : null,
@@ -126,7 +94,7 @@ function parsear(texto) {
     gordo: [],
   };
 
-  // ----- FASE 1: localizar los rangos de línea de cada sección -----
+  // FASE 1: localizar rangos de línea de cada sección
   let lineMachosIni = -1, lineHembrasIni = -1, lineMixtosIni = -1;
   let lineVientresIni = -1, lineGordoIni = -1;
 
@@ -139,12 +107,11 @@ function parsear(texto) {
     else if (lineGordoIni < 0 && /^Gordo$/i.test(l)) lineGordoIni = i + 1;
   }
 
-  // ----- FASE 2: parser de INVERNADA (machos, hembras, mixtos) -----
+  // FASE 2: parser de INVERNADA
   function parsearInvernada(desde, hasta, key) {
     let i = desde;
     while (i < hasta) {
       const linea = lineasRaw[i];
-      // Skipear subheaders de la sección actual
       if (/^(Novillitos|Novillitos\/|Vaquillonas|Total)/i.test(linea)) { i++; continue; }
       const ext = extraerPeso(linea);
       if (ext) {
@@ -180,16 +147,7 @@ function parsear(texto) {
   if (lineHembrasIni >= 0) parsearInvernada(lineHembrasIni, lineMixtosIni   > 0 ? lineMixtosIni   : lineasRaw.length, 'hembras');
   if (lineMixtosIni >= 0)  parsearInvernada(lineMixtosIni,  lineVientresIni > 0 ? lineVientresIni : lineasRaw.length, 'mixtos');
 
-  // ----- FASE 3: parser de VIENTRES -----
-  // Estructura:
-  //   Vaquillonas
-  //   S/servicio
-  //   694 1.732.161 2.250.000 1.350.000
-  //   ...
-  //   Vacas
-  //   Sin servicio
-  //   7.673 1.230.844 ...
-  //   ...
+  // FASE 3: parser de VIENTRES
   if (lineVientresIni >= 0) {
     const finVientres = lineGordoIni > 0 ? lineGordoIni : lineasRaw.length;
     let bufferCat = [];
@@ -198,10 +156,8 @@ function parsear(texto) {
     for (let i = lineVientresIni; i < finVientres; i++) {
       const l = lineasRaw[i];
 
-      // Detectar grupos
       if (/^Vaquillonas$/i.test(l)) { grupoActual = 'Vaquillonas'; bufferCat = []; continue; }
       if (/^Vacas$/i.test(l))       { grupoActual = 'Vacas';       bufferCat = []; continue; }
-      // Headers de columna
       if (/^(Categoría|Peso|Condición|Cabezas|Promedio|Máximo|Mínimo|Al bulto|Por kilo|Total)/i.test(l)) {
         bufferCat = [];
         continue;
@@ -209,12 +165,10 @@ function parsear(texto) {
 
       const nums = extraerNumeros(l);
       if (nums.length === 0) {
-        // Es parte de la categoría (puede ser multilínea: "Medio uso" + "preñez gar.")
         bufferCat.push(l);
         continue;
       }
 
-      // Hay números: recolectar 4
       let allNums = nums.slice();
       let k = i + 1;
       while (allNums.length < 4 && k < finVientres) {
@@ -239,7 +193,7 @@ function parsear(texto) {
     }
   }
 
-  // ----- FASE 4: parser de GORDO -----
+  // FASE 4: parser de GORDO
   if (lineGordoIni >= 0) {
     let bufferCat = [];
     for (let i = lineGordoIni; i < lineasRaw.length; i++) {

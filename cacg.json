@@ -1,355 +1,365 @@
 {
   "source": "cacg",
-  "fecha_publicacion": "02/06/26",
-  "periodo_hasta": "31/05/26",
+  "fecha_publicacion": "03/07/26",
+  "periodo_hasta": "30/06/26",
   "invernada": {
     "machos": [
       {
         "peso": "- 100",
-        "cabezas": 418,
-        "prom_kilo": 7453,
-        "max_kilo": 9000,
-        "min_kilo": 6100,
-        "prom_bulto": 717786,
-        "max_bulto": 900000,
-        "min_bulto": 600000
+        "cabezas": 284,
+        "prom_kilo": 7865,
+        "max_kilo": 9880,
+        "min_kilo": 4350,
+        "prom_bulto": 739724,
+        "max_bulto": 940000,
+        "min_bulto": 520000
       },
       {
         "peso": "100 a 130",
-        "cabezas": 2469,
-        "prom_kilo": 7101,
-        "max_kilo": 9667,
-        "min_kilo": 4918,
-        "prom_bulto": 857089,
-        "max_bulto": 1160000,
+        "cabezas": 1644,
+        "prom_kilo": 7147,
+        "max_kilo": 9364,
+        "min_kilo": 5500,
+        "prom_bulto": 871695,
+        "max_bulto": 1120000,
         "min_bulto": 600000
       },
       {
         "peso": "130 a 160",
-        "cabezas": 10500,
-        "prom_kilo": 6785,
-        "max_kilo": 9556,
-        "min_kilo": 4088,
-        "prom_bulto": 1014138,
-        "max_bulto": 1290000,
-        "min_bulto": 560000
+        "cabezas": 6438,
+        "prom_kilo": 6675,
+        "max_kilo": 8188,
+        "min_kilo": 4138,
+        "prom_bulto": 1001387,
+        "max_bulto": 1310000,
+        "min_bulto": 600000
       },
       {
         "peso": "160 a 180",
-        "cabezas": 19662,
-        "prom_kilo": 6623,
-        "max_kilo": 7558,
-        "min_kilo": 3550,
-        "prom_bulto": 1148172,
-        "max_bulto": 1350000,
-        "min_bulto": 639000
+        "cabezas": 12411,
+        "prom_kilo": 6431,
+        "max_kilo": 9444,
+        "min_kilo": 5000,
+        "prom_bulto": 1113309,
+        "max_bulto": 1700000,
+        "min_bulto": 900000
       },
       {
         "peso": "180 a 200",
-        "cabezas": 30456,
-        "prom_kilo": 6556,
-        "max_kilo": 8050,
-        "min_kilo": 5000,
-        "prom_bulto": 1261803,
-        "max_bulto": 1569750,
-        "min_bulto": 1000000
+        "cabezas": 19773,
+        "prom_kilo": 6384,
+        "max_kilo": 9397,
+        "min_kilo": 5297,
+        "prom_bulto": 1227530,
+        "max_bulto": 1870000,
+        "min_bulto": 980000
       },
       {
         "peso": "200 a 230",
-        "cabezas": 45487,
-        "prom_kilo": 6410,
-        "max_kilo": 8150,
-        "min_kilo": 5000,
-        "prom_bulto": 1380089,
-        "max_bulto": 1720000,
-        "min_bulto": 1050000
+        "cabezas": 27439,
+        "prom_kilo": 6205,
+        "max_kilo": 7050,
+        "min_kilo": 4850,
+        "prom_bulto": 1339688,
+        "max_bulto": 1548000,
+        "min_bulto": 1057300
       },
       {
         "peso": "230 a 260",
-        "cabezas": 16761,
-        "prom_kilo": 5984,
-        "max_kilo": 6800,
-        "min_kilo": 4220,
-        "prom_bulto": 1459565,
-        "max_bulto": 1683000,
-        "min_bulto": 1084540
+        "cabezas": 9765,
+        "prom_kilo": 5774,
+        "max_kilo": 6400,
+        "min_kilo": 4240,
+        "prom_bulto": 1409928,
+        "max_bulto": 1580000,
+        "min_bulto": 1060000
       },
       {
         "peso": "260 a 300",
-        "cabezas": 12415,
-        "prom_kilo": 5304,
-        "max_kilo": 6182,
-        "min_kilo": 3732,
-        "prom_bulto": 1482907,
-        "max_bulto": 1760000,
-        "min_bulto": 1030000
+        "cabezas": 8399,
+        "prom_kilo": 5081,
+        "max_kilo": 5874,
+        "min_kilo": 4014,
+        "prom_bulto": 1440159,
+        "max_bulto": 1650000,
+        "min_bulto": 1170000
       },
       {
         "peso": "300 a 330",
-        "cabezas": 8112,
-        "prom_kilo": 4933,
-        "max_kilo": 5871,
-        "min_kilo": 4000,
-        "prom_bulto": 1572792,
-        "max_bulto": 1820000,
-        "min_bulto": 1291500
+        "cabezas": 3037,
+        "prom_kilo": 4767,
+        "max_kilo": 5294,
+        "min_kilo": 3898,
+        "prom_bulto": 1511207,
+        "max_bulto": 1699500,
+        "min_bulto": 1220000
       },
       {
         "peso": "330 a 370",
-        "cabezas": 6917,
-        "prom_kilo": 4800,
-        "max_kilo": 5343,
-        "min_kilo": 3837,
-        "prom_bulto": 1688179,
-        "max_bulto": 1910000,
-        "min_bulto": 1320000
+        "cabezas": 4357,
+        "prom_kilo": 4692,
+        "max_kilo": 5840,
+        "min_kilo": 3831,
+        "prom_bulto": 1629114,
+        "max_bulto": 2137440,
+        "min_bulto": 1360000
       },
       {
         "peso": "370 a 400",
-        "cabezas": 1506,
-        "prom_kilo": 4494,
-        "max_kilo": 5000,
-        "min_kilo": 3426,
-        "prom_bulto": 1741771,
-        "max_bulto": 1950000,
-        "min_bulto": 1350000
+        "cabezas": 1539,
+        "prom_kilo": 4500,
+        "max_kilo": 6080,
+        "min_kilo": 3700,
+        "prom_bulto": 1734384,
+        "max_bulto": 2310400,
+        "min_bulto": 1463000
       },
       {
         "peso": "+ de 400",
-        "cabezas": 3385,
-        "prom_kilo": 4130,
-        "max_kilo": 4600,
-        "min_kilo": 3443,
-        "prom_bulto": 1831639,
-        "max_bulto": 2163000,
-        "min_bulto": 1592500
+        "cabezas": 1894,
+        "prom_kilo": 4162,
+        "max_kilo": 5720,
+        "min_kilo": 2800,
+        "prom_bulto": 1866198,
+        "max_bulto": 3287700,
+        "min_bulto": 1150000
       }
     ],
     "hembras": [
       {
         "peso": "- de 100",
-        "cabezas": 240,
-        "prom_kilo": 6819,
-        "max_kilo": 8000,
-        "min_kilo": 5100,
-        "prom_bulto": 637093,
+        "cabezas": 223,
+        "prom_kilo": 6843,
+        "max_kilo": 7778,
+        "min_kilo": 5880,
+        "prom_bulto": 616753,
         "max_bulto": 740000,
-        "min_bulto": 462000
+        "min_bulto": 500000
       },
       {
         "peso": "100 a 130",
-        "cabezas": 2927,
-        "prom_kilo": 6435,
-        "max_kilo": 7838,
-        "min_kilo": 5085,
-        "prom_bulto": 769820,
-        "max_bulto": 940000,
-        "min_bulto": 600000
+        "cabezas": 2108,
+        "prom_kilo": 6371,
+        "max_kilo": 9750,
+        "min_kilo": 4381,
+        "prom_bulto": 770496,
+        "max_bulto": 1170000,
+        "min_bulto": 460000
       },
       {
         "peso": "130 a 150",
-        "cabezas": 5489,
-        "prom_kilo": 6235,
-        "max_kilo": 7450,
-        "min_kilo": 4828,
-        "prom_bulto": 891945,
-        "max_bulto": 1117500,
-        "min_bulto": 655000
+        "cabezas": 3780,
+        "prom_kilo": 6103,
+        "max_kilo": 7259,
+        "min_kilo": 4265,
+        "prom_bulto": 870890,
+        "max_bulto": 1030000,
+        "min_bulto": 580000
       },
       {
         "peso": "150 a 170",
-        "cabezas": 10600,
-        "prom_kilo": 6020,
-        "max_kilo": 8121,
-        "min_kilo": 5000,
-        "prom_bulto": 982074,
-        "max_bulto": 1340000,
-        "min_bulto": 800000
+        "cabezas": 6915,
+        "prom_kilo": 5933,
+        "max_kilo": 7742,
+        "min_kilo": 4412,
+        "prom_bulto": 967768,
+        "max_bulto": 1200000,
+        "min_bulto": 750000
       },
       {
         "peso": "170 a 190",
-        "cabezas": 18025,
-        "prom_kilo": 5964,
-        "max_kilo": 7550,
-        "min_kilo": 4474,
-        "prom_bulto": 1085350,
-        "max_bulto": 1390000,
-        "min_bulto": 850000
+        "cabezas": 9997,
+        "prom_kilo": 5821,
+        "max_kilo": 7000,
+        "min_kilo": 4645,
+        "prom_bulto": 1061754,
+        "max_bulto": 1280000,
+        "min_bulto": 810000
       },
       {
         "peso": "190 a 210",
-        "cabezas": 18020,
-        "prom_kilo": 5855,
-        "max_kilo": 7700,
-        "min_kilo": 4500,
-        "prom_bulto": 1184923,
-        "max_bulto": 1601600,
-        "min_bulto": 900000
+        "cabezas": 11951,
+        "prom_kilo": 5777,
+        "max_kilo": 7129,
+        "min_kilo": 4067,
+        "prom_bulto": 1165356,
+        "max_bulto": 1490000,
+        "min_bulto": 850000
       },
       {
         "peso": "210 a 250",
-        "cabezas": 14754,
-        "prom_kilo": 5648,
-        "max_kilo": 7800,
-        "min_kilo": 4242,
-        "prom_bulto": 1287641,
-        "max_bulto": 1715500,
-        "min_bulto": 980000
+        "cabezas": 10126,
+        "prom_kilo": 5559,
+        "max_kilo": 6800,
+        "min_kilo": 2958,
+        "prom_bulto": 1263498,
+        "max_bulto": 1700000,
+        "min_bulto": 710000
       },
       {
         "peso": "250 a 290",
-        "cabezas": 5353,
-        "prom_kilo": 5100,
-        "max_kilo": 6010,
-        "min_kilo": 4220,
-        "prom_bulto": 1377709,
-        "max_bulto": 1650000,
-        "min_bulto": 1150000
+        "cabezas": 4399,
+        "prom_kilo": 4892,
+        "max_kilo": 6770,
+        "min_kilo": 4137,
+        "prom_bulto": 1304443,
+        "max_bulto": 1739890,
+        "min_bulto": 1092000
       },
       {
         "peso": "290 a 320",
-        "cabezas": 2101,
-        "prom_kilo": 4716,
-        "max_kilo": 6950,
-        "min_kilo": 3974,
-        "prom_bulto": 1448983,
-        "max_bulto": 2050250,
-        "min_bulto": 1200000
+        "cabezas": 1278,
+        "prom_kilo": 4650,
+        "max_kilo": 5267,
+        "min_kilo": 3613,
+        "prom_bulto": 1419053,
+        "max_bulto": 1580000,
+        "min_bulto": 1120000
       },
       {
         "peso": "320 a 360",
-        "cabezas": 1235,
-        "prom_kilo": 4586,
-        "max_kilo": 5300,
-        "min_kilo": 3750,
-        "prom_bulto": 1551700,
-        "max_bulto": 1810000,
-        "min_bulto": 1300000
+        "cabezas": 583,
+        "prom_kilo": 4517,
+        "max_kilo": 5538,
+        "min_kilo": 3662,
+        "prom_bulto": 1517914,
+        "max_bulto": 1800000,
+        "min_bulto": 1221000
       },
       {
         "peso": "360 a 390",
-        "cabezas": 400,
-        "prom_kilo": 3864,
-        "max_kilo": 4932,
-        "min_kilo": 2373,
-        "prom_bulto": 1440056,
-        "max_bulto": 1800000,
-        "min_bulto": 890000
+        "cabezas": 140,
+        "prom_kilo": 4096,
+        "max_kilo": 4516,
+        "min_kilo": 3680,
+        "prom_bulto": 1534212,
+        "max_bulto": 1680000,
+        "min_bulto": 1416800
       },
       {
         "peso": "+ de 390",
-        "cabezas": 20,
-        "prom_kilo": 4115,
-        "max_kilo": 4175,
-        "min_kilo": 3975,
-        "prom_bulto": 1646000,
-        "max_bulto": 1670000,
-        "min_bulto": 1590000
+        "cabezas": 38,
+        "prom_kilo": 3683,
+        "max_kilo": 3800,
+        "min_kilo": 3023,
+        "prom_bulto": 1520684,
+        "max_bulto": 1558000,
+        "min_bulto": 1280000
       }
     ],
     "mixtos": [
       {
         "peso": "-100",
-        "cabezas": 64,
-        "prom_kilo": 7722,
-        "max_kilo": 8714,
-        "min_kilo": 6588,
-        "prom_bulto": 623594,
-        "max_bulto": 740000,
-        "min_bulto": 560000
+        "cabezas": 128,
+        "prom_kilo": 7265,
+        "max_kilo": 8765,
+        "min_kilo": 6900,
+        "prom_bulto": 691180,
+        "max_bulto": 710000,
+        "min_bulto": 621000
       },
       {
         "peso": "100 a 130",
-        "cabezas": 4465,
-        "prom_kilo": 6964,
-        "max_kilo": 9175,
-        "min_kilo": 5950,
-        "prom_bulto": 839466,
-        "max_bulto": 1020000,
-        "min_bulto": 690000
+        "cabezas": 2378,
+        "prom_kilo": 6593,
+        "max_kilo": 8047,
+        "min_kilo": 5200,
+        "prom_bulto": 814334,
+        "max_bulto": 1030000,
+        "min_bulto": 572000
       },
       {
         "peso": "130 a 150",
-        "cabezas": 5857,
-        "prom_kilo": 6429,
-        "max_kilo": 9852,
-        "min_kilo": 5467,
-        "prom_bulto": 923173,
-        "max_bulto": 1330000,
+        "cabezas": 3120,
+        "prom_kilo": 6218,
+        "max_kilo": 8133,
+        "min_kilo": 5300,
+        "prom_bulto": 887165,
+        "max_bulto": 1220000,
         "min_bulto": 783000
       },
       {
         "peso": "150 a 170",
-        "cabezas": 9284,
-        "prom_kilo": 6276,
-        "max_kilo": 8050,
-        "min_kilo": 5152,
-        "prom_bulto": 1023966,
-        "max_bulto": 1328250,
-        "min_bulto": 850000
+        "cabezas": 5034,
+        "prom_kilo": 6084,
+        "max_kilo": 6970,
+        "min_kilo": 5100,
+        "prom_bulto": 984911,
+        "max_bulto": 1115200,
+        "min_bulto": 851200
       },
       {
         "peso": "170 a 190",
-        "cabezas": 12504,
-        "prom_kilo": 6046,
-        "max_kilo": 7500,
-        "min_kilo": 4600,
-        "prom_bulto": 1101358,
-        "max_bulto": 1312500,
-        "min_bulto": 828000
+        "cabezas": 7447,
+        "prom_kilo": 5881,
+        "max_kilo": 6470,
+        "min_kilo": 5060,
+        "prom_bulto": 1073647,
+        "max_bulto": 1191300,
+        "min_bulto": 936100
       },
       {
         "peso": "190 a 210",
-        "cabezas": 10482,
-        "prom_kilo": 5989,
-        "max_kilo": 7750,
-        "min_kilo": 5200,
-        "prom_bulto": 1208957,
-        "max_bulto": 1588750,
-        "min_bulto": 1040000
+        "cabezas": 7415,
+        "prom_kilo": 5792,
+        "max_kilo": 7400,
+        "min_kilo": 5000,
+        "prom_bulto": 1169205,
+        "max_bulto": 1480000,
+        "min_bulto": 975000
       },
       {
         "peso": "210 a 250",
-        "cabezas": 7112,
-        "prom_kilo": 5740,
-        "max_kilo": 6850,
-        "min_kilo": 4300,
-        "prom_bulto": 1313646,
-        "max_bulto": 1609750,
-        "min_bulto": 1075000
+        "cabezas": 4632,
+        "prom_kilo": 5650,
+        "max_kilo": 6360,
+        "min_kilo": 4500,
+        "prom_bulto": 1292280,
+        "max_bulto": 1444800,
+        "min_bulto": 1080000
       },
       {
         "peso": "250 a 290",
-        "cabezas": 1455,
-        "prom_kilo": 5243,
-        "max_kilo": 5700,
-        "min_kilo": 4706,
-        "prom_bulto": 1416886,
-        "max_bulto": 1482000,
-        "min_bulto": 1200000
+        "cabezas": 1022,
+        "prom_kilo": 5046,
+        "max_kilo": 6200,
+        "min_kilo": 4370,
+        "prom_bulto": 1348927,
+        "max_bulto": 1612000,
+        "min_bulto": 1179900
       },
       {
         "peso": "290 a 320",
-        "cabezas": 90,
-        "prom_kilo": 4717,
-        "max_kilo": 5050,
-        "min_kilo": 4300,
-        "prom_bulto": 1400972,
-        "max_bulto": 1489750,
-        "min_bulto": 1290000
+        "cabezas": 168,
+        "prom_kilo": 4572,
+        "max_kilo": 5000,
+        "min_kilo": 4400,
+        "prom_bulto": 1380932,
+        "max_bulto": 1550000,
+        "min_bulto": 1320000
       },
       {
         "peso": "320 a 360",
-        "cabezas": 70,
-        "prom_kilo": 5150,
-        "max_kilo": 5150,
-        "min_kilo": 5150,
-        "prom_bulto": 1673750,
-        "max_bulto": 1673750,
-        "min_bulto": 1673750
+        "cabezas": 66,
+        "prom_kilo": 4212,
+        "max_kilo": 4500,
+        "min_kilo": 4000,
+        "prom_bulto": 1464697,
+        "max_bulto": 1552500,
+        "min_bulto": 1400000
       },
       {
         "peso": "360 a 390",
+        "cabezas": 14,
+        "prom_kilo": 4150,
+        "max_kilo": 4150,
+        "min_kilo": 4150,
+        "prom_bulto": 1556250,
+        "max_bulto": 1556250,
+        "min_bulto": 1556250
+      },
+      {
+        "peso": "+ de 390",
         "cabezas": 0,
         "prom_kilo": 0,
         "max_kilo": 0,
@@ -357,170 +367,160 @@
         "prom_bulto": 0,
         "max_bulto": 0,
         "min_bulto": 0
-      },
-      {
-        "peso": "+ de 390",
-        "cabezas": 135,
-        "prom_kilo": 4800,
-        "max_kilo": 4800,
-        "min_kilo": 4800,
-        "prom_bulto": 2016000,
-        "max_bulto": 2016000,
-        "min_bulto": 2016000
       }
     ]
   },
   "vientres": [
     {
       "cat": "Vaquillonas S/servicio",
-      "cabezas": 1284,
-      "prom_bulto": 1585764,
-      "max_bulto": 2050000,
-      "min_bulto": 1300000
+      "cabezas": 479,
+      "prom_bulto": 1554273,
+      "max_bulto": 2400000,
+      "min_bulto": 1225000
     },
     {
       "cat": "Vaquillonas Con servicio",
+      "cabezas": 198,
+      "prom_bulto": 2023737,
+      "max_bulto": 2150000,
+      "min_bulto": 1900000
+    },
+    {
+      "cat": "Vaquillonas Preñez gar.",
+      "cabezas": 2595,
+      "prom_bulto": 2280368,
+      "max_bulto": 3200000,
+      "min_bulto": 1630000
+    },
+    {
+      "cat": "Vacas Sin servicio",
+      "cabezas": 10119,
+      "prom_bulto": 1178528,
+      "max_bulto": 9120000,
+      "min_bulto": 719200
+    },
+    {
+      "cat": "Vacas Con servicio",
       "cabezas": 0,
       "prom_bulto": 0,
       "max_bulto": 0,
       "min_bulto": 0
     },
     {
-      "cat": "Vaquillonas Preñez gar.",
-      "cabezas": 4548,
-      "prom_bulto": 2457618,
-      "max_bulto": 3300000,
-      "min_bulto": 1700000
-    },
-    {
-      "cat": "Vacas Sin servicio",
-      "cabezas": 13493,
-      "prom_bulto": 1221121,
-      "max_bulto": 1732500,
-      "min_bulto": 792000
-    },
-    {
-      "cat": "Vacas Con servicio",
-      "cabezas": 316,
-      "prom_bulto": 1372817,
-      "max_bulto": 1620000,
-      "min_bulto": 1100000
-    },
-    {
       "cat": "Vacas Nuevas preñez gar.",
-      "cabezas": 6272,
-      "prom_bulto": 2451728,
-      "max_bulto": 3005000,
-      "min_bulto": 1770000
+      "cabezas": 3687,
+      "prom_bulto": 2409494,
+      "max_bulto": 3200000,
+      "min_bulto": 1800000
     },
     {
       "cat": "Vacas Medio uso preñez gar.",
-      "cabezas": 2353,
-      "prom_bulto": 2051617,
-      "max_bulto": 2670000,
-      "min_bulto": 1400000
+      "cabezas": 2320,
+      "prom_bulto": 2073207,
+      "max_bulto": 2550000,
+      "min_bulto": 1600000
     },
     {
       "cat": "Vacas Usadas preñez gar.",
-      "cabezas": 8285,
-      "prom_bulto": 1626674,
-      "max_bulto": 2200000,
-      "min_bulto": 900000
+      "cabezas": 7456,
+      "prom_bulto": 1614551,
+      "max_bulto": 2300000,
+      "min_bulto": 970000
     },
     {
       "cat": "Vacas Nuevas con Cría",
-      "cabezas": 1834,
-      "prom_bulto": 1468762,
-      "max_bulto": 2020000,
-      "min_bulto": 1000000
+      "cabezas": 1434,
+      "prom_bulto": 1524665,
+      "max_bulto": 1950000,
+      "min_bulto": 950000
     },
     {
       "cat": "Vacas Medio uso con Cría",
-      "cabezas": 270,
-      "prom_bulto": 1576556,
-      "max_bulto": 1950000,
-      "min_bulto": 1170000
+      "cabezas": 138,
+      "prom_bulto": 1218551,
+      "max_bulto": 1550000,
+      "min_bulto": 1000000
     },
     {
       "cat": "Vacas Usadas con Cría",
-      "cabezas": 1632,
-      "prom_bulto": 1084975,
-      "max_bulto": 1480000,
-      "min_bulto": 660000
+      "cabezas": 1445,
+      "prom_bulto": 1117869,
+      "max_bulto": 2000000,
+      "min_bulto": 750000
     }
   ],
   "gordo": [
     {
       "cat": "Vacas gordas",
-      "cabezas": 7956,
-      "prom_kilo": 3043,
-      "max_kilo": 4080,
-      "min_kilo": 2000
+      "cabezas": 8103,
+      "prom_kilo": 3006,
+      "max_kilo": 3820,
+      "min_kilo": 2350
     },
     {
       "cat": "Vaca Manufactura / Conserva",
-      "cabezas": 19007,
-      "prom_kilo": 2449,
-      "max_kilo": 3600,
-      "min_kilo": 1500
+      "cabezas": 14874,
+      "prom_kilo": 2464,
+      "max_kilo": 4070,
+      "min_kilo": 1200
     },
     {
       "cat": "Vaca Holando",
-      "cabezas": 1116,
-      "prom_kilo": 2438,
-      "max_kilo": 3070,
-      "min_kilo": 1800
+      "cabezas": 776,
+      "prom_kilo": 2360,
+      "max_kilo": 3170,
+      "min_kilo": 1470
     },
     {
       "cat": "Toros",
-      "cabezas": 2753,
-      "prom_kilo": 2803,
-      "max_kilo": 3900,
-      "min_kilo": 1600
+      "cabezas": 2603,
+      "prom_kilo": 2857,
+      "max_kilo": 4150,
+      "min_kilo": 1800
     },
     {
       "cat": "Terneros-as",
-      "cabezas": 14,
-      "prom_kilo": 5154,
-      "max_kilo": 5240,
-      "min_kilo": 5000
+      "cabezas": 0,
+      "prom_kilo": 0,
+      "max_kilo": 0,
+      "min_kilo": 0
     },
     {
       "cat": "Novillitos",
-      "cabezas": 451,
-      "prom_kilo": 4982,
-      "max_kilo": 5350,
-      "min_kilo": 4220
+      "cabezas": 744,
+      "prom_kilo": 4776,
+      "max_kilo": 5280,
+      "min_kilo": 4050
     },
     {
       "cat": "Novillos",
-      "cabezas": 2727,
-      "prom_kilo": 4228,
-      "max_kilo": 4970,
-      "min_kilo": 2550
+      "cabezas": 2416,
+      "prom_kilo": 4161,
+      "max_kilo": 4980,
+      "min_kilo": 2320
     },
     {
       "cat": "Novillos Holando",
-      "cabezas": 1073,
-      "prom_kilo": 3915,
-      "max_kilo": 4250,
-      "min_kilo": 2400
+      "cabezas": 1087,
+      "prom_kilo": 3949,
+      "max_kilo": 4379,
+      "min_kilo": 2800
     },
     {
       "cat": "Vaquillonas",
-      "cabezas": 2928,
-      "prom_kilo": 4423,
-      "max_kilo": 5250,
-      "min_kilo": 2900
+      "cabezas": 3242,
+      "prom_kilo": 4182,
+      "max_kilo": 5300,
+      "min_kilo": 2520
     },
     {
       "cat": "Macho entero joven (MEJ)",
-      "cabezas": 122,
-      "prom_kilo": 3769,
-      "max_kilo": 4600,
-      "min_kilo": 2300
+      "cabezas": 241,
+      "prom_kilo": 3877,
+      "max_kilo": 4300,
+      "min_kilo": 2500
     }
   ],
-  "fecha_extraccion": "2026-07-01",
+  "fecha_extraccion": "2026-07-04",
   "url_fuente": "https://cacg.org.ar/precios"
 }
